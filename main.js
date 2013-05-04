@@ -49,7 +49,7 @@
     });
   }
 
-  var getCodeContents = function() {
+  var getCodeContent = function() {
     var bodyElementHtml = $('iframe').contents().find('body[class=editbox]').html();
     bodyElementHtml = '<pre>' + bodyElementHtml + '</pre>';
     console.log(bodyElementHtml);
@@ -57,34 +57,40 @@
     return window.frames[0].document.body.innerText;
   }
 
+  var setCodeContent = function(code) {
+    window.frames[0].document.body.innerText = code;
+  }
+
   var commit = function() {
-    console.log(getCodeContents());
+    console.log(getCodeContent());
     
-    repo.write('master', filepath, getCodeContents(), 'api commit', function(err) {
+    repo.write('master', filepath, getCodeContent(), 'api commit', function(err) {
       console.log(err);
       alert('done!');
     });
   }
 
-  var contents = function() {
-    repo.getTree("master", function(err, tree) {
-      console.log(err);
-      console.log(tree);
+  var load = function() {
+    repo.read('master', filepath, function(err, data) {
+      setCodeContent(data);
     });
   }
 
-  var createButton = function() {
-    var button = $('<button>Github</button>');
+  var createButton = function(text) {
+    var button = $('<button>' + text + '</button>');
     return button;
   }
 
   $(document).ready(function() {
     initialize_members();
-    var btn_github = createButton();
-    btn_github.click(commit);
+    var btn_commit = createButton('Commit');
+    var btn_load = createButton('Load');
+    btn_commit.click(commit);
+    btn_load.click(load);
     var orc_wrapper = $('.orc-wrapper');
     console.log(orc_wrapper);
-    btn_github.appendTo(orc_wrapper);
+    btn_commit.appendTo(orc_wrapper);
+    btn_load.appendTo(orc_wrapper);
   });
 
 })(jQuery);
