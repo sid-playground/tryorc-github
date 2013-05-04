@@ -49,9 +49,18 @@
     });
   }
 
+  var getCodeContents = function() {
+    var bodyElementHtml = $('iframe').contents().find('body[class=editbox]').html();
+    bodyElementHtml = '<pre>' + bodyElementHtml + '</pre>';
+    console.log(bodyElementHtml);
+    $('iframe').contents().find('body[class=editbox]').html(bodyElementHtml);
+    return window.frames[0].document.body.innerText;
+  }
+
   var commit = function() {
-    console.log($('iframe').contents().find('body[class=editbox]').text());
-    repo.write('master', filepath, $('iframe').contents().find('body[class=editbox]').text(), 'api commit', function(err) {
+    console.log(getCodeContents());
+    
+    repo.write('master', filepath, getCodeContents(), 'api commit', function(err) {
       console.log(err);
       alert('done!');
     });
