@@ -1,0 +1,17 @@
+{
+	"name": "Test",
+	"version": "1.0",
+	"manifest_version": 2,
+
+	"description" : "Test description",
+
+	"content_scripts":[
+	  {	
+		"matches" : ["http://orc.csres.utexas.edu/tryorc.shtml"],
+		"js":	["jquery-1.9.1.min.js", "lib/base64.js", "lib/underscore-min.js", "github.js", "main.js"]
+	  }
+	],
+	"permissions":[
+    "http://orc.csres.utexas.edu/tryorc.shtml"
+	]
+}
