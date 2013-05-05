@@ -81,8 +81,7 @@
     return button;
   }
 
-  $(document).ready(function() {
-    initialize_members();
+  var addButtons = function() {
     var btn_commit = createButton('Commit');
     var btn_load = createButton('Load');
     btn_commit.click(commit);
@@ -91,6 +90,17 @@
     console.log(orc_wrapper);
     btn_commit.appendTo(orc_wrapper);
     btn_load.appendTo(orc_wrapper);
+  }
+  
+  var leftAlignOrcControls = function() {
+    var orc_controls = $('.orc-controls');
+    orc_controls.css('text-align', 'left');
+  }
+
+  $(document).ready(function() {
+    initialize_members();
+    addButtons();
+    leftAlignOrcControls();
   });
 
 })(jQuery);
